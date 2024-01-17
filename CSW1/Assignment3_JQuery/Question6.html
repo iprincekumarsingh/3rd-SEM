@@ -1,87 +1,56 @@
-<html>
-    <head>
-        <title>Question-6</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="jquery.js"></script>
-        <script>
-            $(document).ready(function () {
-                $("#btn1").click(function () {
-                var nme= $("#name").val();
-                var reg=$("#regd").val();
-                var s=$("#mark").val();
-                var tblid=$("#regd").val();
-                    $("#table tr:last").after("<tr id="+tblid+" ><td>"+nme+"</td><td>"+reg+"</td><td>"+s+"</td></tr>");
-                    $("#f")[0].reset(); 
-                    //reset is a jquery function used to reset the form after submitting it.
-                    //here it is used to reset the input fields,so that the next values can be entered easily.   
-                });
-                $("#btn2").click(function () {
-                    $("#table").addClass("change");
-                });
-                $("#btn3").click(function () {
-                    var removeId = $("#remove").val();
-                    $("#"+removeId).remove();
-                }); 
-            });
-        </script>
-        <style>
-            div
-            {
-                background-color: rgb(207, 252, 255);
-                padding: 50px;
-                font-size: 20px;
-                align-items: center;
-                border-radius: 15px;
-                margin: 3%;
-            }
-            table,th,td,tr{
-                border: 4px solid rgb(203, 210, 0);
-                border-collapse: collapse;
-                padding: 15px;
-                width: 500px;
-                margin: 20px;
-            }
-            .change{
-                background-color: aliceblue;
-                color: saddlebrown;   
-            }
-            button{
-                color:rgb(111, 47, 184);
-                background-color:rgba(150, 245, 87, 0.669);
-                padding: 5px;
-                font-size: 20px;
-                border-radius: 7px;
-                font-weight: bold;
-                border: 3px solid rgb(19, 165, 0);
-            }
-            input{
-                display: block;
-                border-radius: 5px;
-                padding: 10px;
-            }
-        </style>
-    </head>
-    <body>
-        <div>
-        <table id="table">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>Dynamic Table Manipulation</title>
+</head>
+<body>
+    <table id="myTable" border="1">
+        <thead>
             <tr>
+                <th>ID</th>
                 <th>Name</th>
-                <th>Regd No.</th>
-                <th>Mark</th>
+                <th>Action</th>
             </tr>
-        </table>
-        <h2>Enter values to add new row</h2>
-        <form id="f">
-        <input type="text" placeholder="Enter Name.." id="name"><br>
-        <input type="text" placeholder="Enter Regd no..." id="regd"><br>
-        <input type="text" placeholder="Enter Mark..." id="mark">
-        </form>
-        <button id="btn1">Add row</button><br><br>
-    
-        <button id="btn2">Change color of the table</button>
-        <p>Enter a Regd No. to delete : <input type="text" id="remove"><br>
-        <button id="btn3">Remove</button>
+        </thead>
+        <tbody>
+            <!-- Table rows will be added dynamically here -->
+        </tbody>
+    </table>
+
+    <button id="addRowBtn" onclick="addRow()">Add Row</button>
+    <button id="changeColorBtn" onclick="changeColor()">Change Color</button>
+
+    <div>
+        <label for="removeId">Enter ID to Remove:</label>
+        <input type="text" id="removeId" placeholder="Enter ID">
+        <button onclick="removeElement()">Remove</button>
     </div>
-    </body>
+
+    <script>
+        function addRow() {
+            var table = $("#myTable tbody");
+            var newRow = $("<tr>");
+            newRow.append("<td>" + table.find("tr").length + "</td>");
+            newRow.append("<td>New Row</td>");
+            newRow.append("<td><button onclick='removeRow(this)'>Remove</button></td>");
+            table.append(newRow);
+        }
+
+        function changeColor() {
+            $("button").css("color", "red");
+        }
+
+        function removeElement() {
+            var removeId = $("#removeId").val();
+            $("#" + removeId).remove();
+        }
+
+        function removeRow(button) {
+            $(button).closest("tr").remove();
+        }
+    </script>
+</body>
 </html>
